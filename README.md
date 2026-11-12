@@ -1,5 +1,5 @@
 # devopsexam
-Okay bro, here are **all the steps** for Exercises 1 to 10, in simple words. 💪 Your record uses someone else's values (the `Parkbong7` repo, port `8081`, JDK-25, Maven 3.9.16), so I've used **your own** setup: `esaikaviya1612`, port `8080`, JDK 21, Maven 3.10.0. Don't copy their screenshots; use yours.
+ here are **all the steps** for Exercises 1 to 10, in simple words. 💪 Your record uses someone else's values (the `Parkbong7` repo, port `8081`, JDK-25, Maven 3.9.16), so I've used **your own** setup: `esaikaviya1612`, port `8080`, JDK 21, Maven 3.10.0. Don't copy their screenshots; use yours.
 
 ## Exercise 1: Lab setup
 1. Install JDK, Git, Maven and Eclipse.
@@ -102,4 +102,4 @@ From the project folder, run these one by one and take a screenshot of each resu
 
 **Where you are now:** Exercises 1 to 8 and 10 are done. Exercise 9 needs the Coverage fix, a successful **Build Now**, and then StaticAnalysis. 🚀
 
-Want me to put this into a **Word or PDF file** so you can copy it into your record? And did Coverage turn green after adding the 0s?
+
