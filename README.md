@@ -856,6 +856,49 @@ Sure bro! Here is **Additional Exercise 1** from start to finish, with every cha
     }
     ```
 20. Save with **Ctrl + S** (no red errors).
+=======
+package com.esaikaviya;
+
+import java.util.Date;
+
+public class Calculator {
+
+    public int add(int a, int b) {
+        return a + b;
+    }
+
+    public int subtract(int a, int b) {
+        return a - b;
+    }
+
+    public int multiply(int a, int b) {
+        return a * b;
+    }
+
+    public int divide(int a, int b) {
+        if (b == 0) {
+            throw new ArithmeticException("Cannot divide by zero");
+        }
+        return a / b;
+    }
+
+    public Date getCurrentDate() {
+        return new Date();
+    }
+
+    public static void main(String[] args) {
+
+        Calculator calc = new Calculator();
+
+        int a = 10;
+        int b = 5;
+
+        System.out.println("Addition: " + calc.add(a, b));
+        System.out.println("Subtraction: " + calc.subtract(a, b));
+        System.out.println("Multiplication: " + calc.multiply(a, b));
+        System.out.println("Division: " + calc.divide(a, b));
+    }
+}
 
 ## Part 5: Run the analysis
 21. Open CMD in the project folder and run (**one line**):
