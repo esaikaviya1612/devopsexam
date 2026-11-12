@@ -607,4 +607,71 @@ git push origin master
 
 To be added after doing them: adding custom rules to SonarQube, static analysis using SonarLint, binding SonarQube rules to SonarLint.
 
+Sure bro! Here is **Additional Exercise 1** from start to finish, with every change and step, ready for your record. 💪
 
+# Additional Exercise 1: Adding custom rules to SonarQube
+
+**Aim:** To create our own custom rule in SonarQube from a rule template, activate it in a quality profile, and check that it finds issues in the code.
+
+## Part 1: Create the custom rule
+1. Start SonarQube (`StartSonar.bat` in `D:\sonarqube-26.9.0.129388\bin\windows-x86-64`) and wait for **SonarQube is operational**.
+2. Open `http://localhost:9000` and log in as admin.
+3. Click **Rules** in the top menu.
+4. In the left panel, set **Language = Java**.
+5. Open the **Template** filter and click **Show Templates Only**. The list shows **"Track uses of disallowed classes"** (Java, Rule Template, Maintainability, Info). 📸 *Screenshot 1*
+6. Click that template. Scroll to **Custom Rules** and click **Create**.
+7. Fill in the form:
+   - **Name:** `Avoid java.util.Date`
+   - **Key:** `NoJavaUtilDate` (the rule ID becomes `java:NoJavaUtilDate`)
+   - **Description:** `Do not use java.util.Date, use java.time classes instead.`
+   - **className:** `java.util.Date`
+   - Severity and status: the defaults (it shows Medium, Maintainability).
+8. Click **Create**. The rule appears under **Custom Rules**. 📸 *Screenshot 2*
+
+## Part 2: Activate the rule in a quality profile
+*(The built-in "Sonar way" profile can't be edited, so we copy it.)*
+
+9. Click **Quality profiles** in the top menu.
+10. On the **Java → Sonar way** row, click **⋮ → Copy**.
+11. Name it `Calculator Profile` and click **Copy**.
+12. On the `Calculator Profile` page, click **Activate More**.
+13. Search `Avoid java.util.Date`, click **Activate**, then confirm.
+14. Open the rule page again. Under **Quality profiles** it now lists **Calculator Profile**. 📸 *Screenshot 3*
+
+## Part 3: Apply the profile to the Calculator project
+15. In `Calculator Profile`, open the **Projects** tab → **Change projects**.
+16. Select **Calculator**, then close the pop-up. (The project now uses this profile.)
+
+## Part 4: Change the code so the rule has something to find
+17. In Eclipse, open `Calculator.java` (`src/main/java/com/esaikaviya`).
+18. **Change 1:** add this import **below** the `package com.esaikaviya;` line:
+    ```java
+    import java.util.Date;
+    ```
+19. **Change 2:** add this method **inside** the class, above `main`:
+    ```java
+    public Date getCurrentDate() {
+        return new Date();
+    }
+    ```
+20. Save with **Ctrl + S** (no red errors).
+
+## Part 5: Run the analysis
+21. Open CMD in the project folder and run (**one line**):
+    ```
+    cd C:\Users\acer\eclipse-workspace-devops\Calculator
+    mvn clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=Calculator -Dsonar.projectName=Calculator -Dsonar.host.url=http://localhost:9000 -Dsonar.token=YOUR_TOKEN
+    ```
+22. Expected: `ANALYSIS SUCCESSFUL` and `BUILD SUCCESS`. 📸 *Screenshot 4 (hide the token)*
+
+## Part 6: Check the result
+23. Open the rule page **Avoid java.util.Date**. At the bottom it shows **Issues (3)**.
+24. Click **Issues (3)** to see the issues in `Calculator.java`. 📸 *Screenshot 5* (the one still pending)
+
+**Result:** A custom rule **Avoid java.util.Date** was created from the template "Track uses of disallowed classes", activated in `Calculator Profile`, and the analysis reported **3 issues** where `java.util.Date` is used.
+
+**Two small notes:**
+- Keep the `Date` code until you've taken the last screenshot. If you remove it and run the analysis again, the issues disappear.
+- Later, remove the extra method and import to keep your code clean.
+
+Send me the **Issues (3)** screenshot, and then we'll start **Additional Exercise 2: SonarLint**. I can also add this exercise to your `.md` cheat sheet if you want. 🚀
