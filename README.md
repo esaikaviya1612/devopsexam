@@ -919,3 +919,42 @@ public class Calculator {
 - Later, remove the extra method and import to keep your code clean.
 
 Send me the **Issues (3)** screenshot, and then we'll start **Additional Exercise 2: SonarLint**. I can also add this exercise to your `.md` cheat sheet if you want. 🚀
+
+
+
+Additional Exercise 2: Static analysis using SonarLint
+
+Aim: To install SonarLint in Eclipse and see code issues while typing.
+
+Open Eclipse → Help → Eclipse Marketplace…
+Search SonarQube for IDE (old name: SonarLint) → Install → Confirm.
+Accept the license → on the Trust Authorities pop-up, tick https://binaries.sonarsource.com → Trust Selected.
+After installing, click Restart Now. 📸 Screenshot 1: plugin installed
+Open Calculator.java. SonarLint checks it automatically when you open or save the file.
+Look for the underlined code, for example System.out.println(...) (“Replace this use of System.out by a logger”) and java.util.Date (“Use the java.time API”). 📸 Screenshot 2: underlined issues in the editor
+Open the issues list: Window → Show View → Other…, search SonarQube, and open the On-The-Fly (issues) view. 📸 Screenshot 3: list of issues
+Hover over an issue to read the rule description and the suggested fix.
+Additional Exercise 3: Binding SonarQube rules to SonarLint
+
+Aim: To connect SonarLint to the SonarQube server so it uses the SonarQube quality profile rules (including our custom rule) instead of the default ones.
+
+Part A: Create a token in SonarQube
+
+Start SonarQube (StartSonar.bat) and wait for SonarQube is operational.
+Open http://localhost:9000 → click your profile icon (A) → My Account → Security.
+Under Generate Tokens: Name eclipse-sonarlint, Type User Token, then Generate.
+Copy the token now (it is shown only once). Don’t put it in screenshots.
+
+Part B: Bind the project in Eclipse
+5. In Eclipse, right-click the Calculator project → SonarQube (or SonarLint) → Bind to SonarQube or SonarCloud…
+6. Choose SonarQube → Next.
+7. Server URL: http://localhost:9000. 📸 Screenshot 4
+8. Authentication: Token → paste your token → Next.
+9. Connection name: LocalSonarQube → Next → Finish.
+10. In the project selection step, choose the SonarQube project Calculator (key Calculator) → Finish. 📸 Screenshot 5: binding done
+
+Part C: Check the result
+11. Reopen Calculator.java and save it. SonarLint now uses the rules from SonarQube’s Calculator Profile. 📸 Screenshot 6: issues in Eclipse after binding
+12. Compare with SonarQube’s Issues page. They should match closely. If the custom rule Avoid java.util.Date shows up in Eclipse, mention that too. If it doesn’t, that’s fine, because support for custom rules depends on the plugin version.
+
+Result line for your record: SonarLint was installed in Eclipse, the project was bound to the local SonarQube server, and the code issues reported in the IDE matched the SonarQube quality profile.
