@@ -10,6 +10,75 @@
 6. In the project folder, run `mvn clean install` and get `BUILD SUCCESS` (**Fig 1.4**).
 7. Start SonarQube and open its dashboard (**Fig 1.5**), then open Jenkins (**Fig 1.6**).
 
+   Step 4A: Switch to a new, empty workspace
+In Eclipse, click File → Switch Workspace → Other...
+In the Workspace box, type a new folder name: C:\Users\acer\eclipse-workspace-devops
+Click Launch. Eclipse will restart with an empty workspace.
+If a Welcome tab opens, close it with the X.
+
+Your old devops-demo project is not deleted. It is still in the old workspace.
+
+Step 4B: Check the new workspace
+Look at the Package Explorer on the left. It should be empty.
+Check the title bar at the top. It should say eclipse-workspace-devops.
+Click Help → About Eclipse IDE and note the version number.
+Step 5: Create the GitHub repository
+
+------------
+Open https://github.com in your browser and sign in.
+Click the + icon at the top right, then New repository.
+Fill in the form:
+Repository name: Calculator
+Visibility: choose Public. Jenkins can then clone it later without any password.
+Do NOT tick “Add a README file”. Also leave .gitignore and license as None. The repo must be empty.
+Click Create repository.
+On the next page, copy the repository URL. It will look like this:
+https://github.com/YOUR-USERNAME/Calculator.git
+------------
+Step 6: Create the Calculator project in Eclipse
+In Eclipse, click File → New → Java Project.
+Project name: Calculator
+Keep the default JRE (it should be JavaSE-21).
+Click Next. On the next page, make sure Create module-info.java file is NOT ticked (if you see it).
+Click Finish. If a window asks about module-info, click Don’t Create.
+Step 7: Add the Calculator class
+In Package Explorer, expand Calculator, then right-click the src folder → New → Class.
+Name: Calculator
+Tick public static void main(String[] args).
+Leave the Package box empty (default package). Click Finish.
+Replace everything in the file with this code:
+java
+public class Calculator {
+    public static void main(String[] args) {
+        int a = 10;
+        int b = 5;
+        System.out.println("Addition: " + (a + b));
+        System.out.println("Subtraction: " + (a - b));
+        System.out.println("Multiplication: " + (a * b));
+        System.out.println("Division: " + (a / b));
+    }
+}
+Press Ctrl + S to save.
+Right-click the file in the editor → Run As → Java Application.
+Look at the Console tab at the bottom. It should print:
+Addition: 15
+Subtraction: 5
+Multiplication: 50
+Division: 2
+----------
+Step 6 (fix): Untick module-info and finish
+In the Java Settings window (your other screenshot), click < Back to go to the first page.
+Under Module, untick Create module-info.java file. The warning at the top will disappear.
+Click Finish.
+If a window asks about module-info, click Don’t Create.
+Check
+
+In Package Explorer, expand Calculator. You should see:
+
+JRE System Library [JavaSE-21]
+src (empty)
+no module-info.java
+
 ## Exercise 2: Git with Eclipse (EGit)
 1. Create a repository on GitHub.
 2. In Eclipse, create the Java project and run the calculator. **Screenshot:** program output.
@@ -18,6 +87,138 @@
 5. Right-click → **Team → Push Branch** to upload to GitHub. **Screenshot:** the GitHub repository.
 6. In **another workspace**: File → Import → Git → Projects from Git → Clone URI, and paste your GitHub URL.
 7. Clone, import, and open `Calculator.java`. **Screenshot:** cloned project.
+8. --------
+   Step 1: Create a GitHub personal access token
+
+GitHub does not accept your account password for Git operations from Eclipse. A token works as the password instead.
+
+On GitHub, click your profile picture (top right) → Settings.
+Scroll down the left menu and click Developer settings.
+Click Personal access tokens → Tokens (classic).
+Click Generate new token → Generate new token (classic).
+Note: eclipse-devops
+Expiration: choose 30 days (enough for the practical).
+Tick the repo checkbox (this ticks everything under it).
+Scroll down and click Generate token.
+Copy the token now (it starts with ghp_) and paste it into a Notepad file. GitHub shows it only once.
+
+⚠️ Do not send me the token, and do not include it in any screenshot. It works like your password.
+
+Step 2: Run the program again (Fig 2.1)
+In Eclipse, open Calculator.java.
+Right-click in the editor → Run As → Java Application.
+Check that the Console shows 15, 5, 50, 2.
+Take a screenshot with the code and the console. This is your Fig 2.1.
+-----------------------------
+Step 1: Allow Eclipse to download the schema
+Click Window → Preferences.
+In the search box at the top left, type download external.
+Click XML (Wild Web Developer) and tick Download external resources like referenced DTD, XSD.
+Click Apply and Close.
+Step 2: Refresh the project
+Close the pom.xml tab (click the X on the tab).
+Right-click the Calculator project → Maven → Update Project... (or press Alt + F5).
+Click OK.
+Open pom.xml again and click the Problems tab.
+---------------
+Try this instead
+Clear the search box (click the x inside it).
+Type just: XML
+In the left list, click XML (Wild Web Developer). If you don’t see that, look for a folder named XML and open it.
+Tick Download external resources like referenced DTD, XSD.
+Click Apply and Close.
+
+Then:
+
+Close the pom.xml tab.
+Right-click the Calculator project → Maven → Update Project... → OK.
+Open the Problems tab and check.
+---------------
+Step 3: Share the project with Git
+
+This turns your project folder into a Git repository.
+
+In Package Explorer, right-click the Calculator project → Team → Share Project...
+Select Git and click Next (if it asks, choose Git as the repository type).
+Tick Use or create repository in parent folder of project.
+Tick the Calculator project in the list.
+Click Create Repository. The path column will now show a repository folder.
+Click Finish.
+-----------------
+Step 4: Commit (Initial Commit)
+Right-click the Calculator project → Team → Commit.... The Git Staging view opens at the bottom.
+Look at Unstaged Changes. You should see files like .classpath, .project, pom.xml and src/Calculator.java.
+Select all the files you need (not bin or target folders, if they appear). Then click the green ++ button (Add all files to the index), or drag the files into Staged Changes.
+In the Commit Message box, type: Initial Commit
+Click Commit.
+------------
+Step 4 (continue): Stage and commit
+Double-click the Git Staging tab at the top. It will fill the whole screen.
+In Unstaged Changes, click the green ++ button (Add all files to the index). The files move to Staged Changes.
+Check the list. You should see .classpath, .gitignore, .project, pom.xml, src/Calculator.java and some settings files. You should not see bin or target, because your .gitignore already excludes them.
+In the Commit Message box, type exactly: Initial Commit
+Click Commit. (Do not click “Commit and Push” yet.)
+Double-click the tab again to bring the layout back to normal.
+---------------
+Step 4 (finish): Write the message and commit
+Double-click the Git Staging tab to make it full screen. The commit message box is hidden because the view is small.
+Click inside the big Commit Message box (under the blue “Unborn branch” line) and type exactly:
+Initial Commit
+Click Commit (the red button). Do not click “Commit and Push” yet.
+Double-click the tab again to bring the layout back.
+---------------
+Step 5: Push to GitHub
+Right-click the Calculator project → Team → Remote → Push...
+Select URI, then click Next.
+Fill in the form:
+URI: https://github.com/esaikaviya1612/Calculator.git (when you paste it, Host, Repository path and Protocol fill in automatically)
+User: esaikaviya1612
+Password: paste your token from Notepad (the one starting with ghp_). This is not your GitHub password.
+Tick Store in Secure Store.
+Click Next.
+In the Push Ref specification page, click Add All Branches Spec. It adds refs/heads/*:refs/heads/*, as in your record.
+Click Next, then Finish.
+A Push Results window opens. Take a screenshot of it, then click OK.
+-----------
+Create the token (5 minutes)
+Open https://github.com and sign in.
+Click your profile picture (top right) → Settings.
+Scroll down the left menu and click Developer settings (the last option).
+Click Personal access tokens → Tokens (classic).
+Click Generate new token → Generate new token (classic). GitHub may ask for your password again, which is normal.
+Fill in:
+Note: eclipse-devops
+Expiration: 30 days
+Select scopes: tick the repo checkbox (all the boxes under it get ticked)
+Scroll to the bottom and click Generate token.
+A green box shows a token starting with ghp_.... Click the copy icon next to it.
+
+⚠️ GitHub shows the token only once. Paste it into Notepad right away and save the file. If you lose it, just generate a new one.
+
+Use it in Eclipse
+
+Go back to the Push window, then:
+
+User: esaikaviya1612
+Password: paste the token (Ctrl + V)
+Tick Store in Secure Store
+---------
+Step 6: Clone the repo into a second workspace
+In Eclipse, click File → Switch Workspace → Other...
+Type a new folder: C:\Users\acer\eclipse-workspace-clone and click Launch. Eclipse restarts with an empty workspace.
+Close the Welcome tab if it opens.
+Click File → Import...
+Open Git → Projects from Git, then click Next.
+Select Clone URI, then click Next.
+Paste the URI: https://github.com/esaikaviya1612/Calculator.git. The other boxes fill in by themselves. The repo is public, so you can leave User and Password empty. Click Next.
+Keep master ticked and click Next.
+For Directory, keep the default (C:\Users\acer\git\Calculator) and click Next.
+Select Import existing Eclipse projects, click Next, make sure Calculator is ticked, and click Finish.
+------
+verified ✅ Super bro! 🎉
+
+Title bar: eclipse-workspace-clone ✅
+Cloned Calculator [Calculator master] project ✅
 
 ## Exercise 3: SonarQube project
 1. Start SonarQube with `StartSonar.bat` (wait for "SonarQube is operational").
