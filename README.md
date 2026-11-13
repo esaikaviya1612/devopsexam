@@ -1,6 +1,11 @@
 # devopsexam
  here are **all the steps** for Exercises 1 to 10, in simple words. 💪 Your record uses someone else's values (the `Parkbong7` repo, port `8081`, JDK-25, Maven 3.9.16), so I've used **your own** setup: `esaikaviya1612`, port `8080`, JDK 21, Maven 3.10.0. Don't copy their screenshots; use yours.
 
+ winget --version
+JDK:winget install --id EclipseAdoptium.Temurin.17.JDK --exact
+For Git: winget install --id Git.Git --exact
+Mvn:winget install --id Apache.Maven --exact
+
 ## Exercise 1: Lab setup
 1. Install JDK, Git, Maven and Eclipse.
 2. In CMD, run `java -version` and `javac -version` (**Fig 1.1**).
